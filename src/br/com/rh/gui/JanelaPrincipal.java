@@ -4,7 +4,6 @@ import br.com.rh.model.Funcionario;
 import br.com.rh.util.MergeSort;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,10 +36,9 @@ public class JanelaPrincipal extends JFrame {
 
     private void inicializarComponentes() {
         // Painel Superior (Formulário de Cadastro)
-        JPanel painelFormulario = new JPanel(new GridLayout(4, 2, 5, 5));
-        painelFormulario.setBorder(new EmptyBorder(10, 10, 10, 10));
+        JPanel painelFormulario = new JPanel(new GridLayout(4, 2));
 
-        painelFormulario.add(new JLabel("Nome do Candidato/Funcionário:"));
+        painelFormulario.add(new JLabel("Nome do Candidato:"));
         txtNome = new JTextField();
         painelFormulario.add(txtNome);
 
@@ -48,13 +46,11 @@ public class JanelaPrincipal extends JFrame {
         txtCargo = new JTextField();
         painelFormulario.add(txtCargo);
 
-        painelFormulario.add(new JLabel("Produção (Ex: 100):"));
+        painelFormulario.add(new JLabel("Score (Ex: 100):"));
         txtProducao = new JTextField();
         painelFormulario.add(txtProducao);
 
         JButton btnCadastrar = new JButton("Cadastrar");
-        btnCadastrar.setBackground(new Color(40, 167, 69));
-        btnCadastrar.setForeground(Color.WHITE);
         btnCadastrar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -68,13 +64,11 @@ public class JanelaPrincipal extends JFrame {
 
         // Centro (Área de Texto e Título)
         JPanel painelCentro = new JPanel(new BorderLayout());
-        painelCentro.setBorder(new EmptyBorder(0, 10, 10, 10));
-        
+
         txtAreaResultado = new JTextArea();
         txtAreaResultado.setEditable(false);
-        txtAreaResultado.setFont(new Font("Monospaced", Font.PLAIN, 14));
         JScrollPane scrollPane = new JScrollPane(txtAreaResultado);
-        
+
         painelCentro.add(new JLabel("Lista / Ranking:"), BorderLayout.NORTH);
         painelCentro.add(scrollPane, BorderLayout.CENTER);
 
@@ -82,7 +76,7 @@ public class JanelaPrincipal extends JFrame {
 
         // Painel Inferior (Botões de Ação)
         JPanel painelBotoes = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        
+
         JButton btnMostrarLista = new JButton("Mostrar Lista Atual");
         btnMostrarLista.addActionListener(new ActionListener() {
             @Override
@@ -92,8 +86,6 @@ public class JanelaPrincipal extends JFrame {
         });
 
         JButton btnGerarRanking = new JButton("Gerar Ranking (Merge Sort)");
-        btnGerarRanking.setBackground(new Color(0, 123, 255));
-        btnGerarRanking.setForeground(Color.WHITE);
         btnGerarRanking.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -113,7 +105,8 @@ public class JanelaPrincipal extends JFrame {
         String producaoStr = txtProducao.getText().trim();
 
         if (nome.isEmpty() || cargo.isEmpty() || producaoStr.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor, preencha todos os campos.", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Por favor, preencha todos os campos.", "Erro",
+                    JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -122,8 +115,8 @@ public class JanelaPrincipal extends JFrame {
             Funcionario f = new Funcionario(nome, cargo, producao);
             listaFuncionarios.add(f);
 
-            JOptionPane.showMessageDialog(this, "Funcionário cadastrado com sucesso!");
-            
+            JOptionPane.showMessageDialog(this, "Candidato cadastrado com sucesso!");
+
             // Limpa os campos
             txtNome.setText("");
             txtCargo.setText("");
@@ -133,16 +126,17 @@ public class JanelaPrincipal extends JFrame {
             mostrarLista();
 
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "O campo de produção deve ser um número inteiro válido.", "Erro numérico", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "O campo de score deve ser um número inteiro válido.",
+                    "Erro numérico", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void mostrarLista() {
         StringBuilder sb = new StringBuilder();
         if (listaFuncionarios.isEmpty()) {
-            sb.append("Nenhum funcionário cadastrado.\n");
+            sb.append("Nenhum candidato cadastrado.\n");
         } else {
-            sb.append("--- LISTA DE FUNCIONÁRIOS (Sem Ordenação) ---\n\n");
+            sb.append("--- LISTA DE CANDIDATOS (Sem Ordenação) ---\n\n");
             for (int i = 0; i < listaFuncionarios.size(); i++) {
                 sb.append((i + 1)).append(". ").append(listaFuncionarios.get(i).toString()).append("\n");
             }
@@ -152,7 +146,8 @@ public class JanelaPrincipal extends JFrame {
 
     private void gerarRanking() {
         if (listaFuncionarios.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Cadastre alguns funcionários primeiro para gerar o ranking.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Cadastre alguns funcionários primeiro para gerar o ranking.", "Aviso",
+                    JOptionPane.WARNING_MESSAGE);
             return;
         }
 
@@ -160,7 +155,7 @@ public class JanelaPrincipal extends JFrame {
         MergeSort.ordenarPorProducaoDecrescente(listaFuncionarios);
 
         StringBuilder sb = new StringBuilder();
-        sb.append("=== RANKING DE PRODUÇÃO (Classificado via Merge Sort) ===\n\n");
+        sb.append("=== RANKING DE SCORE (Classificado via Merge Sort) ===\n\n");
         for (int i = 0; i < listaFuncionarios.size(); i++) {
             sb.append(i + 1).append("º Lugar: ").append(listaFuncionarios.get(i).toString()).append("\n");
         }

@@ -3,12 +3,12 @@ package br.com.rh.model;
 public class Funcionario {
     private String nome;
     private String cargo;
-    private int producao;
+    private int score;
 
-    public Funcionario(String nome, String cargo, int producao) {
+    public Funcionario(String nome, String cargo, int score) {
         this.nome = nome;
         this.cargo = cargo;
-        this.producao = producao;
+        this.score = score;
     }
 
     public String getNome() {
@@ -27,16 +27,16 @@ public class Funcionario {
         this.cargo = cargo;
     }
 
-    public int getProducao() {
-        return producao;
+    public int getScore() {
+        return score;
     }
 
-    public void setProducao(int producao) {
-        this.producao = producao;
+    public void setScore(int score) {
+        this.score = score;
     }
 
     @Override
     public String toString() {
-        return String.format("Nome: %-15s | Cargo: %-15s | Produção: %d", nome, cargo, producao);
+        return String.format("Nome: %-15s | Cargo: %-15s | Score: %d", nome, cargo, score);
     }
 }

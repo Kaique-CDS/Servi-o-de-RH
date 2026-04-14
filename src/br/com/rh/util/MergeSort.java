@@ -12,7 +12,7 @@ public class MergeSort {
         }
         Funcionario[] array = lista.toArray(new Funcionario[0]);
         mergeSort(array, 0, array.length - 1);
-        
+
         lista.clear();
         for (Funcionario f : array) {
             lista.add(f);
@@ -48,8 +48,9 @@ public class MergeSort {
         int k = esquerda;
 
         while (i < n1 && j < n2) {
-            // Ordenação decrescente: comparamos se a produção do lado Esquerdo é >= a do lado Direito
-            if (L[i].getProducao() >= R[j].getProducao()) {
+            // Ordenação decrescente: comparamos se a produção do lado Esquerdo é >= a do
+            // lado Direito
+            if (L[i].getScore() >= R[j].getScore()) {
                 array[k] = L[i];
                 i++;
             } else {
