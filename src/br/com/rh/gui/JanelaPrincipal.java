@@ -15,7 +15,7 @@ public class JanelaPrincipal extends JFrame {
     private List<Funcionario> listaFuncionarios;
 
     private JTextField txtNome;
-    private JTextField txtCargo;
+    private JComboBox<String> cbCargo;
     private JTextField txtProducao;
     private JTextArea txtAreaResultado;
 
@@ -43,8 +43,9 @@ public class JanelaPrincipal extends JFrame {
         painelFormulario.add(txtNome);
 
         painelFormulario.add(new JLabel("Cargo:"));
-        txtCargo = new JTextField();
-        painelFormulario.add(txtCargo);
+        String[] cargos = {"Analista de Sistemas", "Dev. Junior", "Estagiario"};
+        cbCargo = new JComboBox<>(cargos);
+        painelFormulario.add(cbCargo);
 
         painelFormulario.add(new JLabel("Score (Ex: 100):"));
         txtProducao = new JTextField();
@@ -101,7 +102,7 @@ public class JanelaPrincipal extends JFrame {
 
     private void cadastrarFuncionario() {
         String nome = txtNome.getText().trim();
-        String cargo = txtCargo.getText().trim();
+        String cargo = (String) cbCargo.getSelectedItem();
         String producaoStr = txtProducao.getText().trim();
 
         if (nome.isEmpty() || cargo.isEmpty() || producaoStr.isEmpty()) {
@@ -112,6 +113,12 @@ public class JanelaPrincipal extends JFrame {
 
         try {
             int producao = Integer.parseInt(producaoStr);
+
+            if (producao < 0 || producao > 100) {
+                JOptionPane.showMessageDialog(this, "Score Invalido", "Erro numérico", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
             Funcionario f = new Funcionario(nome, cargo, producao);
             listaFuncionarios.add(f);
 
@@ -119,7 +126,7 @@ public class JanelaPrincipal extends JFrame {
 
             // Limpa os campos
             txtNome.setText("");
-            txtCargo.setText("");
+            cbCargo.setSelectedIndex(0);
             txtProducao.setText("");
             txtNome.requestFocus();
 
