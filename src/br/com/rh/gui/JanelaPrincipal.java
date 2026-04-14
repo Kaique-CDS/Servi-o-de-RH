@@ -35,7 +35,6 @@ public class JanelaPrincipal extends JFrame {
     }
 
     private void inicializarComponentes() {
-        // Painel Superior (Formulário de Cadastro)
         JPanel painelFormulario = new JPanel(new GridLayout(4, 2));
 
         painelFormulario.add(new JLabel("Nome do Candidato:"));
@@ -43,7 +42,7 @@ public class JanelaPrincipal extends JFrame {
         painelFormulario.add(txtNome);
 
         painelFormulario.add(new JLabel("Cargo:"));
-        String[] cargos = {"Analista de Sistemas", "Dev. Junior", "Estagiario"};
+        String[] cargos = { "Analista de Sistemas", "Dev. Junior", "Estagiario" };
         cbCargo = new JComboBox<>(cargos);
         painelFormulario.add(cbCargo);
 
@@ -58,12 +57,11 @@ public class JanelaPrincipal extends JFrame {
                 cadastrarFuncionario();
             }
         });
-        painelFormulario.add(new JLabel("")); // célula vazia
+        painelFormulario.add(new JLabel(""));
         painelFormulario.add(btnCadastrar);
 
         add(painelFormulario, BorderLayout.NORTH);
 
-        // Centro (Área de Texto e Título)
         JPanel painelCentro = new JPanel(new BorderLayout());
 
         txtAreaResultado = new JTextArea();
@@ -75,7 +73,6 @@ public class JanelaPrincipal extends JFrame {
 
         add(painelCentro, BorderLayout.CENTER);
 
-        // Painel Inferior (Botões de Ação)
         JPanel painelBotoes = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
         JButton btnMostrarLista = new JButton("Mostrar Lista Atual");
@@ -124,7 +121,6 @@ public class JanelaPrincipal extends JFrame {
 
             JOptionPane.showMessageDialog(this, "Candidato cadastrado com sucesso!");
 
-            // Limpa os campos
             txtNome.setText("");
             cbCargo.setSelectedIndex(0);
             txtProducao.setText("");
@@ -158,7 +154,6 @@ public class JanelaPrincipal extends JFrame {
             return;
         }
 
-        // Chama o MergeSort para ordenar a lista (decrescente por produção)
         MergeSort.ordenarPorProducaoDecrescente(listaFuncionarios);
 
         StringBuilder sb = new StringBuilder();
